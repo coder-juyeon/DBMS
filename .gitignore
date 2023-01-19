@@ -1,5 +1,9 @@
 #################
 
+# png, bkp
+*.png
+*.bkp
+
 # resource
 **/resource
 
