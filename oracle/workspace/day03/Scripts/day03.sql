@@ -307,13 +307,63 @@ SELECT T.TEAM_ID, PLAYER_NAME, TEL
 FROM TEAM T INNER JOIN PLAYER P
 ON T.TEAM_ID = P.TEAM_ID AND P.PLAYER_NAME = '송종국';
 
+/*---------------------------------과제----------------------------------------*/
 /*JOBS 테이블에서 JOB_ID로 직원들의 JOB_TITLE, EMAIL, 성, 이름 검색*/
+SELECT J.JOB_ID, JOB_TITLE, E.EMAIL, E.FIRST_NAME, E.LAST_NAME
+FROM JOBS J INNER JOIN EMPLOYEES E ON J.JOB_ID = E.JOB_ID;
+
 /*EMP 테이블의 SAL을 SALGRADE 테이블의 등급으로 나누기*/
+/*SALGRADE의 하이와 로우가 EMP의 SAL안에 있다면 SALGRADE의 등급으로 정하고 EMP에 SALGRADE를 추가시켜서 넣어준다?*/
+SELECT * FROM EMP e2;
+SELECT * FROM SALGRADE s2;
+SELECT E.ENAME, S.GRADE FROM SALGRADE s, EMP e  WHERE E.SAL >= S.LOSAL AND E.SAL <= S.HISAL;
+
 /*EMPLOYEES 테이블에서 HIREDATE가 2003~2005년까지인 사원의 정보와 부서명 검색*/
+SELECT * FROM EMPLOYEES
+
+SELECT * FROM EMPLOYEES
+WHERE HIRE_DATE LIKE '03%' OR HIRE_DATE LIKE '04%' OR HIRE_DATE LIKE '05%';
+
 /*JOB_TITLE 중 'Manager'라는 문자열이 포함된 직업들의 평균 연봉을 JOB_TITLE별로 검색*/
+/*JOBS와 EMPLOYEES 조인을 한 후에 JOB_ID로 연결시켜 주고 'Manager'라는 문자열이 포함된것만 JOB_TITLE별로 묶어서 E.SALARY를 구해서 평균내기 */
+SELECT * FROM JOBS j;
+SELECT * FROM EMPLOYEES
+
+
+SELECT j.JOB_TITLE, AVG(E.SALARY) 
+FROM JOBS j INNER JOIN EMPLOYEES e ON J.JOB_ID = E.JOB_ID 
+GROUP BY J.JOB_TITLE
+HAVING J.JOB_TITLE LIKE '%Manager%';
+
 /*EMP 테이블에서 ENAME에 L이 있는 사원들의 DNAME과 LOC 검색*/
+SELECT * FROM EMP e;
+SELECT * FROM DEPT d; 
+
+/*확인용*/
+/*SELECT ENAME, D.DNAME, D.LOC  
+FROM EMP e INNER JOIN DEPT d ON E.DEPTNO = D.DEPTNO AND ENAME LIKE '%L%';*/
+
+SELECT D.DNAME, D.LOC  
+FROM EMP e INNER JOIN DEPT d ON E.DEPTNO = D.DEPTNO AND ENAME LIKE '%L%';
+
 /*축구 선수들 중에서 각 팀별로 키가 가장 큰 선수들 전체 정보 검색*/
+/*-----------------------잘 모르겠음--------------------*/
+SELECT * FROM PLAYER p;
+
+/*TEAM별로 묶어줘야 하는데 묶으면 전체정보를 볼 수 없어서 어떻게 해야 할지?*/
+SELECT *
+FROM PLAYER p 
+WHERE HEIGHT IN (SELECT MAX(HEIGHT) FROM PLAYER p GROUP BY TEAM_ID);
+
+SELECT TEAM_ID, MAX(HEIGHT) 
+	FROM PLAYER p 
+	GROUP BY TEAM_ID
+
 /*EMP 테이블에서 사원의 이름과 매니저 이름을 검색*/
+/* 사원의 이름? 문제 이해 못함*/
+SELECT * FROM EMP e;
 
-
+SELECT ENAME, JOB 
+FROM EMP e 
+WHERE JOB = 'MANAGER';
 
